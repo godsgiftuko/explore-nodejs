@@ -4,6 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "config": "^3.3.9"
+    "config": "^3.3.9",
+    "sequelize": "^6.33.0"
   }
 }

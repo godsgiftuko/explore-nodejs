@@ -1,6 +1,9 @@
 {
     "database": {
       "host": "localhost",
+      "user": "root",
+      "pass": "",
+      "name": "test-sequelize",
       "port": 3306
     },
     "api_key": "your_api_key"
