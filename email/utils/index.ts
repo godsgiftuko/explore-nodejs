@@ -5,7 +5,7 @@ import * as dnsPacket from 'dns-packet';
 const email = 'godsgiftuko@ssl_.com'; // Enter email address
 
 export class EmailUtils {
-  static async validateEmail(email): Promise<boolean> {
+  static validateEmail(email): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (!validator.isEmail(email)) {
         resolve(false);

@@ -5,7 +5,7 @@ const dnsPacket = require('dns-packet');
 const email = 'godsgiftuko@ssl_.com'; // Enter email address
 
 class EmailUtils {
-  static async validateEmail(email) {
+  static validateEmail(email) {
     return new Promise((resolve, reject) => {
       if (!validator.isEmail(email)) {
         resolve(false);
