@@ -2,13 +2,22 @@ const validator = require('validator');
 const dgram = require('dgram');
 const dnsPacket = require('dns-packet');
 
-const email = 'godsgiftuko@ssl_.com'; // Enter email address
+const email = 'godsgiftuko@some_provider.com'; // Enter email address
 
 class EmailUtils {
-  static validateEmail(email) {
-    return new Promise((resolve, reject) => {
-      if (!validator.isEmail(email)) {
-        resolve(false);
+  static isEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  static async validateEmail(email) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const validEmail = await validator.isEmail(email);
+        if (!validEmail) {
+          resolve(false);
+        }
+      } catch (e) {
+        throw new Error('Error validationg email address');
       }
 
       const domain = email.split('@')[1];
@@ -29,9 +38,9 @@ class EmailUtils {
       socket.send(packet, 0, packet.length, 53, '8.8.8.8');
 
       socket.on('message', (message) => {
-        const response = dnsPacket.decode(message);
+        const answers = dnsPacket.decode(message).answers;
 
-        if (response.answers.some((answer) => answer.type === 'MX')) {
+        if (answers.some((answer) => answer.type === 'MX')) {
           resolve(true);
         } else {
           resolve(false);
@@ -40,6 +49,10 @@ class EmailUtils {
         socket.close();
       });
     });
+  }
+
+  static getSmtpDomain(host) {
+    return host.split('.')[1];
   }
 }
 
